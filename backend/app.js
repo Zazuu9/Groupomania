@@ -20,6 +20,6 @@ mongoose.connect(process.env.MONGODB_URL,
     });
 
 
-app.use('api/auth', userRoutes);
+app.use('/api/auth', userRoutes);
 
 module.exports = app;
