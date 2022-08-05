@@ -1,7 +1,8 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const dotenv = require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const userRoutes = require('./routes/user');
 
+const dotenv = require('dotenv').config();
 const app = express()
 
 
@@ -19,8 +20,6 @@ mongoose.connect(process.env.MONGODB_URL,
     });
 
 
-app.use((req, res, next) => {
-    res.json({message: 'Votre requete a bien été reçue !'})
-})
+app.use('api/auth', userRoutes);
 
 module.exports = app;
