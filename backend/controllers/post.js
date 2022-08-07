@@ -1,8 +1,14 @@
 const Post = require('../models/Post');
 const fs = require('fs');
+const PostValidator = require('../validators/post');
 
 exports.createPost = (req, res ,next) => {
     const postObject = JSON.parse(req.body.post);
+
+    if (!PostValidator.validateMesssage(postObject.message)) {
+        return res.status(400).json({ message: "Merci d'écrire quelque chose"})
+    };
+    
     delete postObject._id;
     delete postObject._userId;
     const post = new Post({

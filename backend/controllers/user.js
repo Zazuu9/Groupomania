@@ -1,9 +1,17 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const UserValidator = require('../validators/user');
 
 
 exports.signup = (req, res, next) => {
+    if (!UserValidator.valideEmail(req.body.email)) {
+        return res.status(400).json({ message: "Merci d'entrer une adresse valide !" })
+    };
+    if (!UserValidator.validatePassword(req.body.password)) {
+        return res.status(400).json({ message: "Votre mot de passe doit comprendre au moins 8 caractères, une lettre majuscule et un chiffre"})
+    }
+
     bcrypt.hash(req.body.password, 10)
     .then(hash => {
         const user = new User({
