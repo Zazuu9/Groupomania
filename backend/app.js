@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 const path = require('path');
-
-
-const dotenv = require('dotenv').config();
 const app = express();
+const dotenv = require('dotenv').config();
+
+
 
 
 mongoose.connect(process.env.MONGODB_URL,
