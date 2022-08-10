@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema({
     password: { type: String, required: true, match: UserValidator.passwordRegex },
     pseudo: { type: String, required: true },
     imageProfil: { type: String, required: true },
-    birthday: { type: Number, required: true }
+    birthday: { type: String, required: true }
 });
 
 userSchema.plugin(uniqueValidator);

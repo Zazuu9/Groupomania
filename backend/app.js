@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
+const userRoutes = require('./routes/user');
 const path = require('path');
 const app = express();
 const dotenv = require('dotenv').config();
@@ -22,9 +22,10 @@ mongoose.connect(process.env.MONGODB_URL,
         next();
     });
 
+app.use(express.json());
 
-app.use('/api/auth', userRoutes);
 app.use('/api/post', postRoutes);
+app.use('/api/auth', userRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;

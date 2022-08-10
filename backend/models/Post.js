@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
+const PostValidator = require('../validators/post');
 
-const postSchema = mongoose.Schema({
+const postsSchema = mongoose.Schema({
     userId: { type: String, required: true },
-    message: { type: String, required: true },
-    image: { type: String, required: true },
-    likes: { type: Number, required: false, default: 0 }
+    message: { type: String, required: true, match: PostValidator.wordRegex},
+    imagePost: { type: String, required: false },
 })
 
-module.exports = mongoose.model('Post', postSchema);
+module.exports = mongoose.model('Posts', postsSchema);
