@@ -1,4 +1,4 @@
-const wordRegex = /[a-zA-Z\d\W]{1,}/;
+const wordRegex = /[a-zA-Z\d\W]{2,}/;
 
 module.exports = {
     wordRegex,

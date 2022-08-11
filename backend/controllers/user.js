@@ -22,22 +22,28 @@ exports.signup = (req, res, next) => {
             birthday: req.body.birthday,
         })
         user.save()
-        .then(() => res.status(201).json('Utilisateur créé !'))
-        .catch(error => res.status(409).json({message: "Soucis d'identifiant"}))
+        .then(() => res.status(201).json({message: 'Utilisateur créé !'}))
+        .catch(error => res.status(409).json({message: "Adresse déja utilisé !"}))
     })
     .catch(error => res.status(500).json({error})) 
 };
 
 exports.login = (req, res, next) => {
+    if (!UserValidator.validateEmail(req.body.email)) {
+        return res.status(400).json({message: "Merci de rentrer une adresse valide !"})
+    };
+    if (!UserValidator.validatePassword(req.body.password)) {
+        return res.status(400).json({message: "Votre mot de passe doit comprendre au moins 8 caractères, une lettre majuscule et un chiffre"})
+    };
     User.findOne({email:req.body.email})
     .then(user => {
         if (!user) {
-            res.status(401).json({message: 'Utilisateur non trouvé !'});
+            res.status(404).json({message: 'Utilisateur non trouvé !'});
         }else{
             bcrypt.compare(req.body.password, user.password)
             .then(valid => {
                 if (!valid) {
-                    res.status(401).json({message: 'Identifiant/mot de passe incorrect'});
+                    res.status(401).json({message: 'Mot de passe incorrect'});
                 }else{
                     res.status(201).json({
                         userId: user._id,
@@ -62,20 +68,20 @@ exports.getAllUser = (req, res, next) => {
 }
 
 exports.getOneUser = (req, res, next) => {
-    User.findOne({_id: req.params.id})
+    User.findOne({id: req.params.id})
     .then((user) => res.status(200).json(user))
     .catch(error => res.status(500).json({error}))
 }
 
 exports.modifyUser = (req, res, next) => {
-    User.updateOne({_id: req.params.id}, {...req.body, _id: req.params.id})
-    .then((user) => res.status(200).json(user))
+    User.updateOne({id: req.params.id}, {...req.body, id: req.params.id})
+    .then((user) => res.status(200).json({message: 'Utilisateur modifié !'}))
     .catch(error => res.status(500).json({error}))
 }
 
 exports.deleteUser = (req, res, next) => {
-    User.deleteOne({_id: req.params.id})
-    .then((user) => res.status(200).json(user))
+    User.deleteOne({id: req.params.id})
+    .then((user) => res.status(200).json({message: "Utilisateur supprimé !"}))
     .catch(error => res.status(500).json({error}))
 }
 

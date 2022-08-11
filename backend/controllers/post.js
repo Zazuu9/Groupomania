@@ -4,7 +4,9 @@ const Posts = require('../models/Post');
 const PostValidator = require('../validators/post');
 
 exports.createPost = (req, res ,next) => {
-    console.log(req.body);
+    if (!PostValidator.validateMesssage(req.body.message)) {
+        return res.status(400).json({messsage: "Veuillez écrire quelque chose !"})
+    }
 
     const post = new Posts({
         userId: req.body.userId,
@@ -12,7 +14,7 @@ exports.createPost = (req, res ,next) => {
         imagePost: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
     });
     post.save()
-    .then(() =>res.status(201).json(post))
+    .then(() =>res.status(201).json({message: "Publication enregistré"}))
     .catch((error) => res.status(400).json({ error }));
 };
 
@@ -28,8 +30,8 @@ exports.getOnePost = (req, res, next) => {
     .catch(error => res.status(404).json({error}))
 }
 
-exports.modifyPost = (req, res ,nexy) => {
-    Posts.updateOne({_id: req.params.id}, {...req.body, _id: req.params.id})
+exports.modifyPost = (req, res ,next) => {
+    Posts.updateOne({_userId: req.params.userId}, {...req.body, _userId: req.params.userId})
     .then((post) => res.status(201).json(post))
     .catch(error => res.status(500).json({error}))
 };
@@ -39,4 +41,6 @@ exports.deletePost = (req, res, next) => {
     .then((post) => res.status(201).json(post))
     .catch(error => res.status(500).json({error}))
 };
+
+
 
