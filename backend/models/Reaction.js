@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
 const likesScehma = mongoose.Schema ({
-    likes: { type: Number, required: false, default: 0 },
-    dislikes: { type: Number, required: false, default: 0 },
-    usersLiked: { type: Array, required: false, },
-    usersDisliked: { type: Array, required: false },
+    userId: { type: String, required: true },
+    postId: { type: String, required: true },
+    type: { type: String, required: true }
 })
 
 module.exports = mongoose.model('Reaction', likesScehma);
