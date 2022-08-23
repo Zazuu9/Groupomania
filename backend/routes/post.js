@@ -10,5 +10,8 @@ router.post('/', auth, multer, postCtrl.createPost);
 router.put('/:id', auth, multer, postCtrl.modifyPost);
 router.delete('/:id', auth, postCtrl.deletePost);
 router.post('/:id/reaction', auth, postCtrl.addReaction);
+router.put('/:id/reaction', auth, postCtrl.updateReaction);
+router.delete('/:id/reaction', auth, postCtrl.deleteReaction);
+
 
 module.exports = router;

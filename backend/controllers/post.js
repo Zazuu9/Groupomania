@@ -1,7 +1,9 @@
+const { count } = require('console');
+const { json } = require('express');
 const fs = require('fs');
 const jwt = require('jsonwebtoken')
 const Posts = require('../models/Post');
-const Reaction = require('../models/Reaction');
+const Reactions = require('../models/Reaction');
 
 exports.createPost = (req, res ,next) => {
 
@@ -25,13 +27,12 @@ exports.getAllPost = (req, res, next) => {
 exports.getOnePost = (req, res, next) => {
     Posts.findOne({_id: req.params.id})
     .then((post) => {
-        Reaction.find({postId: post.id})
+        Reactions.find({postId: post.id})
         .then(reactions => {
             post.reactions = reactions
             res.status(200).json(post)
         })
-        
-        })
+    })
     .catch(error => res.status(404).json({error}))
 }
 
@@ -48,14 +49,36 @@ exports.deletePost = (req, res, next) => {
 };
 
 exports.addReaction = (req ,res) => {
-    const reaction = new Reaction ({
-        userId : req.auth.userId,
-        postId : req.params.id,
-        type : req.body.type
-    })
-    reaction.save()
-    .then((reaction) => res.status(201).json(reaction))
-    .catch(error => res.status(500).json({error}))
+    Reactions.findOne({postId: req.params.id, userId: req.auth.userId})
+        .then((reaction) => {
+            if (reaction) {return res.status(200).json({message: 'Réaction déja existante !'})}
+            if (!reaction) {const reaction = new Reactions ({
+                userId : req.auth.userId,
+                postId : req.params.id,
+                type : req.body.type
+            })
+            reaction.save()
+            .then((reaction) => res.status(201).json({message: 'Réaction ajoutée !'}))
+            .catch(error => res.status(500).json({error}))}
+        })
+        .catch(error => res.status(500).json(error))
+}
+
+exports.updateReaction = (req, res) => {
+    
+}
+
+exports.deleteReaction = (req ,res) => {
+    Reactions.findOne({postId: req.params.id, userId: req.auth.userId})
+        .then((reaction) => { 
+            if (!reaction) {return res.status(404).json({message: 'Aucune réaction trouvé !'});}
+            if (req.auth.userId == reaction.userId) {
+            Reactions.deleteOne({_id : reaction._id})
+            .then((reaction) => res.status(201).json({message: 'Réaction supprimé !'}))
+            .catch(error => res.status(500).json({message: 'Impossible'}))
+            }
+        })
+        .catch(error => res.status(500).json(error))
 }
 
 
