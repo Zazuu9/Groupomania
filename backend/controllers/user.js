@@ -43,7 +43,7 @@ exports.login = (req, res, next) => {
             bcrypt.compare(req.body.password, user.password)
             .then(valid => {
                 if (!valid) {
-                    res.status(401).json({message: 'Mot de passe incorrect'});
+                    res.status(401).json({message: 'Identifiant/mot de passe incorrect'});
                 }else{
                     res.status(201).json({
                         userId: user._id,
