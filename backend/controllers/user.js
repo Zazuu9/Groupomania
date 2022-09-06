@@ -7,7 +7,7 @@ const UserValidator = require('../validators/user');
 exports.signup = (req, res, next) => {
     console.log(req.body)
     if (!UserValidator.validateEmail(req.body.email)) {
-        return res.status(400).json({message: "Merci de rentrer une adresse valide !"})
+        return res.status(400).json({message: "Merci de rentrer une adresse mail valide !"})
     };
     if (!UserValidator.validatePassword(req.body.password)) {
         return res.status(400).json({message: "Votre mot de passe doit comprendre au moins 8 caractères, une lettre majuscule et un chiffre"})

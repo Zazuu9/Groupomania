@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import React from "react";
 import Logo from "../../assets/Logo//icon-left-font.svg"
 import "./Signin.css"
-import { useState } from "react";
 
 function Signin() {
     const [email, setEmail] = useState('');
@@ -16,9 +16,7 @@ function Signin() {
         }
         fetch('http://localhost:8000/api/auth/login', {
             method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-            },
+            headers: {'Content-type': 'application/json'},
             body: JSON.stringify(dataToSubmit)
         })  
         .then(res => res.json())
