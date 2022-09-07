@@ -1,15 +1,20 @@
 import { Link, useNavigate} from "react-router-dom";
 import { useState} from "react";
-import cookies from 'next-cookies'
+import Cookies from "js-cookie"
 import React from "react";
 import Logo from "../../assets/Logo//icon-left-font.svg"
 import "./Signin.css"
+import { useEffect } from "react";
 
 function Signin() {
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    useEffect(() => {
+        if (Cookies.get('Token') !== undefined) {
+            navigate('/dashboard')
+        }
+    })
     const handleFormSubmit = (event) => {
         event.preventDefault();
         const dataToSubmit = {
@@ -21,9 +26,9 @@ function Signin() {
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify(dataToSubmit)
         })  
-
-        .then(res => {if(res.status === 201) {navigate("/dashboard"); } ; return res.json()})
-        .then(res => {console.log(res);})
+        
+        .then(res => res.json())
+        .then(res => {console.log(res); if( res.token !== undefined) {Cookies.set('Token', res.token);if(res.token) {navigate("/dashboard")}}})
         .catch(error => console.error(error))
         
     }
