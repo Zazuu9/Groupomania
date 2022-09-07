@@ -17,7 +17,7 @@ function Header() {
     }
     return (
         <header>
-            <img src={Logo} alt="Groupomania" />
+            <img src={Logo} alt="Groupomania" className="Logo"/>
             <FontAwesomeIcon icon={faRightFromBracket} className="Logout" onClick={handleClick}/>
         </header>
     )

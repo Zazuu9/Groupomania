@@ -2,7 +2,7 @@
 import { Routes, Route, Navigate } from "react-router-dom"
 import Signup from "./pages/Signup/Signup"
 import Signin from "./pages/Signin/Signin"
-import Dashboard from "./pages/Home/Home"
+import Dashboard from "./pages/Dashboard/Dashboard"
 import Error404 from "./components/Error404/Error404"
 
 function App() {

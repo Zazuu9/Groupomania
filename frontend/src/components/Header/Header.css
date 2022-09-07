@@ -5,12 +5,19 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 100px;
 }
 
-img {
+.Logo {
     width: 250px;
 }
 
 .Logout {
+    cursor: pointer;
     font-size: 20px;
+    transition: 0.3s;
+}
+
+.Logout:hover {
+    transform: scale(1.15);
 }

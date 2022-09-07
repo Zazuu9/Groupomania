@@ -1,0 +1,29 @@
+
+.posts {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    height: auto;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 25px;
+}
+
+.message {
+    margin: 5%;
+}
+
+.PostImage {
+    width: 98%;
+    border-radius: 0 0 25px 25px;
+    margin-bottom: 1%;
+}
+
+
