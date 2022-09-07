@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate} from "react-router-dom";
+import { useState} from "react";
+import cookies from 'next-cookies'
 import React from "react";
 import Logo from "../../assets/Logo//icon-left-font.svg"
 import "./Signin.css"
 
 function Signin() {
+    const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -19,9 +21,11 @@ function Signin() {
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify(dataToSubmit)
         })  
-        .then(res => res.json())
-        .then(res => {console.log(res);})
 
+        .then(res => {if(res.status === 201) {navigate("/dashboard"); } ; return res.json()})
+        .then(res => {console.log(res);})
+        .catch(error => console.error(error))
+        
     }
     return (
         <main>

@@ -1,0 +1,16 @@
+header {
+    margin: auto;
+    margin-top: 15px;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+img {
+    width: 250px;
+}
+
+.Logout {
+    font-size: 20px;
+}

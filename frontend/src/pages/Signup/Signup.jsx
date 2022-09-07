@@ -1,10 +1,11 @@
-
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import React from "react";
 import Logo from "../../assets/Logo//icon-left-font.svg"
 import "./Signup.css"
 
 function Signup() {
+    const navigate = useNavigate()
     const [pseudo, setPseudo] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -24,8 +25,9 @@ function Signup() {
             method: 'POST',
             body: formData
         })  
-        .then(res => res.json())
+        .then(res => {if(res.status === 201) { navigate("/login") }; return res.json()})
         .then(res => {console.log(res);})
+        .catch(error => console.error(error))
 
     }
 
