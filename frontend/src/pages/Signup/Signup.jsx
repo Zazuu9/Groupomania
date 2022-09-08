@@ -61,7 +61,7 @@ function Signup() {
                 </div>
                 
                 <div class="btn">
-                    <input type="submit" id="login" class="Signup" value="Inscription" />
+                    <input type="submit" id="login" class="Signup_btn" value="Inscription" />
                     
                 </div>
             </form>

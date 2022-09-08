@@ -8,21 +8,19 @@ const Dashboard = () => {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
+    
         fetch('http://localhost:8000/api/post/', {
             credentials: 'include',
         }) 
-        .then(res => {console.log(res.status); return res.json()})
-        .then(post => setPosts(post))
+        .then(res => res.json())
+        .then(post => {console.log(post); setPosts(post)})
         .catch(error => console.log(error))
     }, [])
-
-    console.log(posts);
-
 
     return (
         <div>
             <Header />
-            {posts.map(post => <Post userId = {post.userId} message={post.message} imagePost={post.imagePost} />)}
+            {posts.map(post => <Post userId = {post.userId} message={post.message} imagePost={post.imagePost} pseudo={post.pseudo} imageProfil={post.imageProfil} />)}
         </div>
     )
 }

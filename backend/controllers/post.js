@@ -4,9 +4,9 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken')
 const Posts = require('../models/Post');
 const Reactions = require('../models/Reaction');
+const Users = require('../utils/getUserInfo');
 
 exports.createPost = (req, res ,next) => {
-
     const post = new Posts({
         userId: req.auth.userId,
         message: req.body.message,
@@ -18,10 +18,25 @@ exports.createPost = (req, res ,next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-exports.getAllPost = (req, res, next) => {
-    Posts.find()
-    .then((post) => res.status(200).json(post))
-    .catch(error => res.status(400).json({error}))
+exports.getAllPost = async (req, res, next) => {
+    try {
+        const Post = await Posts.find()
+        
+        const Postmap = await Promise.all(Post.map(async (Data) => {
+        const UserInfo = await Users.GetUserInfo(Data.userId)
+        return { 
+            userId: Data.userId,
+            message: Data.message,
+            imagePost: Data.imagePost,
+            pseudo: UserInfo.pseudo,
+            imageProfil: UserInfo.imageProfil
+        }
+    }))
+    res.status(200).json(Postmap)
+} catch (error) {res.status(400).json({error})}
+
+    /*.then((post) => res.status(200).json(post))
+    .catch(error => res.status(400).json({error}))*/
 };
 
 exports.getOnePost = (req, res, next) => {

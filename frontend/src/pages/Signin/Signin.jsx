@@ -28,10 +28,13 @@ function Signin() {
         })  
         
         .then(res => res.json())
-        .then(res => {console.log(res); if( res.token !== undefined) {Cookies.set('Token', res.token);if(res.token) {navigate("/dashboard")}}})
+        .then(res => {console.log(res); if( res.token !== undefined) {Cookies.set('Token', res.token);if(res.token) {navigate("/dashboard")}};})
         .catch(error => console.error(error))
         
     }
+        
+        
+
     return (
         <main>
             <img src={Logo} alt="Groupomania" />

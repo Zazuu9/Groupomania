@@ -34,6 +34,8 @@ form .test input {
 }
 
 .Signin {
+    width: 160px;
+    height: 40px;
     padding: 5px;
     background-color: #fff;
     border: solid 1px black;
@@ -49,6 +51,7 @@ form .test input {
 }
 
 .Signup {
+    height: 40px;
     padding: 5px;
     margin: 15px;
     color: #fff;

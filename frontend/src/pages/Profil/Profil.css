@@ -1,0 +1,53 @@
+.form_user {
+    width: 40%;
+}
+
+label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    padding-left: 10%;
+    padding-top: 4%;
+}
+
+input {
+    width: 60%;
+    height: 30px;
+}
+
+.modify_btn {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: #FD2D01;
+    border: solid 1px #4E5166;
+    width: 110px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.modify_btn:hover {
+    transform: scale(1.08);
+}
+
+.info_user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.userInfo_pseudo {
+    font-size: 35px;
+}
+
+.other_info {
+    display: flex;
+    justify-content: space-evenly;
+    width: 300px;
+}
+
+
+

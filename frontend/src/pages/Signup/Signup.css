@@ -33,7 +33,9 @@ form .test input {
     align-items: center;
 }
 
-.Signup {
+.Signup_btn {
+    width: 160px;
+    height: 40px;
     padding: 5px;
     margin: 15px;
     color: #fff;

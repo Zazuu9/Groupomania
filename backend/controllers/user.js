@@ -45,6 +45,7 @@ exports.login = (req, res, next) => {
                 if (!valid) {
                     res.status(401).json({message: 'Identifiant/mot de passe incorrect'});
                 }else{
+                    console.log(user._id);
                     res.status(201).json({
                         userId: user._id,
                         token: jwt.sign(
@@ -68,20 +69,33 @@ exports.getAllUser = (req, res, next) => {
 }
 
 exports.getOneUser = (req, res, next) => {
-    User.findOne({id: req.params.id})
+    User.findOne({_id: req.auth.userId})
     .then((user) => res.status(200).json(user))
     .catch(error => res.status(500).json({error}))
 }
 
-exports.modifyUser = (req, res, next) => {
-    User.updateOne({id: req.params.id}, {...req.body, id: req.params.id})
+exports.modifyUser = async (req, res, next) => {
+    console.log(req.body);
+    const modifyUser = req.file? {
+            ...req.body, 
+            password: req.body.password,
+            imageProfil: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        }: { pseudo: req.body.pseudo, password: req.body.password, email: req.body.email };
+
+    User.updateOne({ _id: req.auth.userId }, { ...modifyUser })
+
     .then((user) => res.status(200).json({message: 'Utilisateur modifié !'}))
     .catch(error => res.status(500).json({error}))
 }
 
 exports.deleteUser = (req, res, next) => {
-    User.deleteOne({id: req.params.id})
+    User.deleteOne({_id: req.auth.userId})
     .then((user) => res.status(200).json({message: "Utilisateur supprimé !"}))
     .catch(error => res.status(500).json({error}))
 }
 
+exports.getUserInfo =  (req, res) => {
+    User.find()
+    .then((user) => res.status(200).json(user))
+    .catch(error => res.status(500).json({error}))
+} 

@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom"
 import Signup from "./pages/Signup/Signup"
 import Signin from "./pages/Signin/Signin"
 import Dashboard from "./pages/Dashboard/Dashboard"
+import Profil from "./pages/Profil/Profil"
 import Error404 from "./components/Error404/Error404"
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
             <Route path="/signup" exact element={<Signup />} />
             <Route path="/login" exact element={<Signin />} />
             <Route path="/dashboard" exact element={<Dashboard />} />
+            <Route path="/profil" exact element={<Profil />} />
             <Route path="*" exact element={<Error404 />} />
         </Routes>
         )

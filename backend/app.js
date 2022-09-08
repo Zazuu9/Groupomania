@@ -25,6 +25,7 @@ mongoose.connect(process.env.MONGODB_URL,
 app.use(express.json());
 app.use(cookieParser())
 
+
 app.use('/api/post', postRoutes);
 app.use('/api/auth', userRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
