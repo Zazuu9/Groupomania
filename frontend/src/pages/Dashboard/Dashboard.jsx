@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Header from "../../components/Header/Header";
 import Post from "../../components/Post/Post";
-
+import CreatePost from "../../components/Post/CreatePost";
 
 const Dashboard = () => { 
     const [posts, setPosts] = useState([])
@@ -20,6 +20,7 @@ const Dashboard = () => {
     return (
         <div>
             <Header />
+            <CreatePost />
             {posts.map(post => <Post userId = {post.userId} message={post.message} imagePost={post.imagePost} pseudo={post.pseudo} imageProfil={post.imageProfil} />)}
         </div>
     )

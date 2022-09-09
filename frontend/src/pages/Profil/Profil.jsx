@@ -10,25 +10,29 @@ function Profil() {
     const [file, setFile] = useState(null)
 
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    useEffect(() => {
+        fetch('http://localhost:8000/api/auth/getoneuser', {
+            credentials: 'include',
+        }) 
+        .then(res => res.json())
+        .then(Data => setUserInfo(Data))
+        .catch(error => console.log(error))
 
-        // const formData = new FormData() 
-        // formData.append('pseudo', pseudo)
-        // formData.append('email', email)
-        // formData.append('password', password)
+
+    }, [])
+
+
+    const modifyUser = (e) => {
+        e.preventDefault()
 
         const DataSubmit = {
             pseudo: pseudo,
             email: email,
         }
-
-        const DataPasswordSubmit = {
-            password: password
-        }
-
         console.log(DataSubmit);
-        console.log(DataPasswordSubmit);
+
+        
+
         fetch('http://localhost:8000/api/auth/modifyuser', {
             headers: {Accept: 'application/json', 'Content-type': 'application/json'},
             method : 'PUT',
@@ -38,6 +42,17 @@ function Profil() {
         .then(res => res.json())
         .catch(error => console.log(error))
 
+        
+    }
+
+    const modifyPassword = (e) => {
+        e.preventDefault()
+        
+        const DataPasswordSubmit = {
+            password: password
+        }
+
+        console.log(DataPasswordSubmit);
         fetch('http://localhost:8000/api/auth/changepwd', {
             headers: {'Content-type': 'application/json'},
             method : 'PUT',
@@ -49,16 +64,6 @@ function Profil() {
     }
     
 
-    useEffect(() => {
-        fetch('http://localhost:8000/api/auth/getoneuser', {
-            credentials: 'include',
-        }) 
-        .then(res => res.json())
-        .then(Data => setUserInfo(Data))
-        .catch(error => console.log(error))
-
-
-    }, [])
 
     return (
         <main>
@@ -76,9 +81,13 @@ function Profil() {
             <form method="put" className='form_user'>
                 <label htmlFor='pseudo'>Pseudo :<input type="text" onChange={(e) => setPseudo(e.target.value)} name="pseudo" id="pseudo" placeholder={userInfo.pseudo}/></label>
                 <label htmlFor='email'>Email :<input type="text" onChange={(e) => setEmail(e.target.value)}name="email" id="email" placeholder={userInfo.email}/></label>
-                <label htmlFor='password'>Mot de passe :<input type="password" onChange={(e) => setPassword(e.target.value)}name="password" id="password" placeholder="********"/></label>
-                <div className='btn'><input type="submit" value="Modifier" onClick={handleSubmit} className="modify_btn" /></div>
+                <div className='btn'><input type="submit" value="Modifier" onClick={modifyUser} className="modify_btn" /></div>
             </form>
+            <form action="put" className='form_password'>
+                <label htmlFor='password'>Mot de passe :<input type="password" onChange={(e) => setPassword(e.target.value)}name="password" id="password" placeholder="********"/></label>
+                <div className='btn'><input type="submit" value="Modifier" onClick={modifyPassword} className="modify_btn" /></div>
+            </form>
+            
         </main>
     )
 }

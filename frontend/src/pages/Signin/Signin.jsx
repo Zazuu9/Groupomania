@@ -38,7 +38,7 @@ function Signin() {
     return (
         <main>
             <img src={Logo} alt="Groupomania" />
-            <form method="post" action="#" onSubmit={handleFormSubmit}>
+            <form method="post" action="#" onSubmit={handleFormSubmit} className="form_signin">
                 <div class="test">
                     <label for="email">Email : </label>
                     <input type="text" value={email} onChange={(event) => setEmail(event.target.value)} id="email" name="email" placeholder="John@mail.com" />

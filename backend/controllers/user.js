@@ -77,14 +77,17 @@ exports.getOneUser = (req, res, next) => {
 
 exports.modifyUser = async (req, res, next) => {
     console.log(req.body);
+    if (!UserValidator.validateEmail(req.body.email)) {
+        return res.status(400).json({message: "Merci de rentrer une adresse mail valide !"})
+    };
+    if (!UserValidator.validateUserName(req.body.pseudo)) {
+        return res.status(400).json({message: "Merci de rentrer un pseudo valide !"})
+    }
     const modifyUser = req.file? {
             ...req.body, 
         }: { pseudo: req.body.pseudo, email: req.body.email};
 
     User.updateOne({ _id: req.auth.userId }, { ...modifyUser })
-    .then((user) => {
-        if (!UserValidator.validateEmail(req.body.email)) {return res.status(400).json({message: "Merci de rentrer une adresse mail valide !"})};
-    })
     .then((user) => res.status(200).json({message: 'Utilisateur modifié !'}))
     .catch(error => res.status(500).json({error}))
 }

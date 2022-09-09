@@ -34,7 +34,7 @@ function Signup() {
     return (
         <main>
             <img src={Logo} alt="Groupomania" />
-            <form method="post" action="#" onSubmit={handleFormSubmit}>
+            <form method="post" action="#" onSubmit={handleFormSubmit} className="form_signup">
                 <div class="test">
                     <label for="pseudo">Pseudo : </label>
                     <input type="text" value={pseudo} onChange={(event) => setPseudo(event.target.value)} id="pseudo" name="pseudo" placeholder="John" />

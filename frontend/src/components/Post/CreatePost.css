@@ -1,0 +1,71 @@
+.form_createpost {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 25px;
+}
+
+.publish_btn {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: #FD2D01;
+    border: solid 1px #4E5166;
+    width: 110px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.publish_btn:hover {
+    transform: scale(1.08);
+}
+
+.label_message {
+    margin-left: -10%;
+}
+
+.imagePost {
+    margin-left: -10%;
+    display: flex;
+    align-items: flex-start;
+}
+
+.input_message {
+    width: 80%;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+
+@media screen and (max-width:1250px) {
+    .form_createpost {
+        width: 50%;
+    }
+
+    .label_message {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        
+    }
+    
+    .input_message {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+}
+
+@media screen and (max-width:800px) {
+    .form_createpost {
+        width: 70%;
+    }
+}
+
+
+
