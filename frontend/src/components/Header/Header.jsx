@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { React } from "react"
 import Logo from "../../assets/Logo/icon-left-font-monochrome-black.svg"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faRightFromBracket} from "@fortawesome/free-solid-svg-icons"
@@ -6,7 +6,7 @@ import {faUser} from "@fortawesome/free-regular-svg-icons"
 import "./Header.css"
 import Cookies from "js-cookie"
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
 

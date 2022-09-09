@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const UserValidator = require('../validators/user');
+const Utils = require('../utils/getUserInfo')
 
 
 exports.signup = (req, res, next) => {
@@ -78,12 +79,12 @@ exports.modifyUser = async (req, res, next) => {
     console.log(req.body);
     const modifyUser = req.file? {
             ...req.body, 
-            password: req.body.password,
-            imageProfil: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-        }: { pseudo: req.body.pseudo, password: req.body.password, email: req.body.email };
+        }: { pseudo: req.body.pseudo, email: req.body.email};
 
     User.updateOne({ _id: req.auth.userId }, { ...modifyUser })
-
+    .then((user) => {
+        if (!UserValidator.validateEmail(req.body.email)) {return res.status(400).json({message: "Merci de rentrer une adresse mail valide !"})};
+    })
     .then((user) => res.status(200).json({message: 'Utilisateur modifié !'}))
     .catch(error => res.status(500).json({error}))
 }
@@ -99,3 +100,26 @@ exports.getUserInfo =  (req, res) => {
     .then((user) => res.status(200).json(user))
     .catch(error => res.status(500).json({error}))
 } 
+
+exports.changePsswd = (req, res, next) => {
+    const password = req.body.password
+    User.findOne({_id: req.auth.userId})
+    .then((user) => { 
+        if (!UserValidator.validatePassword(req.body.password)) {
+            return res.status(400).json({message: "Votre mot de passe doit comprendre au moins 8 caractères, une lettre majuscule et un chiffre"})
+        };
+        bcrypt
+        .hash(password, 10)
+        .then((hash) => {
+            user
+                .update({
+                    password: hash,
+                    id: req.auth.userId
+                })
+                .then(() => res.status(201).json({message: "Mot de passe modifié"}))
+                .catch(error => res.status(500).json({error}))
+        })
+        .catch(error => res.status(500).json({error}))
+    })
+    .catch(error => res.status(500).json({error}))
+}

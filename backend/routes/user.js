@@ -10,5 +10,6 @@ router.get('/', auth, userCtrl.getAllUser);
 router.get('/getoneuser', auth, userCtrl.getOneUser);
 router.put('/modifyuser', auth, userCtrl.modifyUser);
 router.delete('/deleteuser', auth, userCtrl.deleteUser);
+router.put('/changepwd', auth, userCtrl.changePsswd);
 
 module.exports = router;

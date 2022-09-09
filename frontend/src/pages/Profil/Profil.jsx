@@ -7,7 +7,7 @@ function Profil() {
     const [pseudo, setPseudo] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [image, setImage] = useState(null)
+    const [file, setFile] = useState(null)
 
 
     const handleSubmit = (e) => {
@@ -17,20 +17,31 @@ function Profil() {
         // formData.append('pseudo', pseudo)
         // formData.append('email', email)
         // formData.append('password', password)
-        // formData.append('image', image)
 
         const DataSubmit = {
             pseudo: pseudo,
             email: email,
-            password: password,
-            image: image
         }
 
+        const DataPasswordSubmit = {
+            password: password
+        }
+
+        console.log(DataSubmit);
+        console.log(DataPasswordSubmit);
         fetch('http://localhost:8000/api/auth/modifyuser', {
-            
             headers: {Accept: 'application/json', 'Content-type': 'application/json'},
             method : 'PUT',
             body: JSON.stringify(DataSubmit),
+            credentials: 'include',
+        })
+        .then(res => res.json())
+        .catch(error => console.log(error))
+
+        fetch('http://localhost:8000/api/auth/changepwd', {
+            headers: {'Content-type': 'application/json'},
+            method : 'PUT',
+            body: JSON.stringify(DataPasswordSubmit),
             credentials: 'include',
         })
         .then(res => res.json())
@@ -53,7 +64,7 @@ function Profil() {
         <main>
             <Header />
             <div>   
-                <img src={userInfo.image} alt="" />
+                <img src={userInfo.file} alt="" />
                 <div className='info_user'>
                     <h3 className='userInfo_pseudo'>{userInfo.pseudo}</h3>
                     <section className='other_info'>
@@ -66,7 +77,6 @@ function Profil() {
                 <label htmlFor='pseudo'>Pseudo :<input type="text" onChange={(e) => setPseudo(e.target.value)} name="pseudo" id="pseudo" placeholder={userInfo.pseudo}/></label>
                 <label htmlFor='email'>Email :<input type="text" onChange={(e) => setEmail(e.target.value)}name="email" id="email" placeholder={userInfo.email}/></label>
                 <label htmlFor='password'>Mot de passe :<input type="password" onChange={(e) => setPassword(e.target.value)}name="password" id="password" placeholder="********"/></label>
-                <label htmlFor='image'>Photo de Profil :<input type="file" onChange={(e) => setImage(e.target.files[0])} name="image" id="image" accept="image/png; image/jpeg, image/jpg"/></label>
                 <div className='btn'><input type="submit" value="Modifier" onClick={handleSubmit} className="modify_btn" /></div>
             </form>
         </main>

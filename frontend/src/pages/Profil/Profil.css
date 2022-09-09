@@ -50,4 +50,29 @@ input {
 }
 
 
+@media screen and (max-width:1250px) {
+    .form_user {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width:800px) {
+    .form_user {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width:530px) {
+    .form_user {
+        width: 70%;
+    }
+
+    label {
+        flex-direction: column;
+    }
+
+    input {
+        width: 90%;
+    }
+}
 
