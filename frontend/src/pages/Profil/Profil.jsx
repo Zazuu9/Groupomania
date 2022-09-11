@@ -8,9 +8,14 @@ function Profil() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [file, setFile] = useState(null)
-
+    const [refresh, setRefresh] = useState(false)
+    
+    const RefreshProfil = () => {
+        setRefresh(true)
+    }
 
     useEffect(() => {
+        setRefresh(false)
         fetch('http://localhost:8000/api/auth/getoneuser', {
             credentials: 'include',
         }) 
@@ -19,7 +24,7 @@ function Profil() {
         .catch(error => console.log(error))
 
 
-    }, [])
+    }, [refresh])
 
 
     const modifyUser = (e) => {
@@ -29,9 +34,6 @@ function Profil() {
             pseudo: pseudo,
             email: email,
         }
-        console.log(DataSubmit);
-
-        
 
         fetch('http://localhost:8000/api/auth/modifyuser', {
             headers: {Accept: 'application/json', 'Content-type': 'application/json'},
@@ -40,6 +42,7 @@ function Profil() {
             credentials: 'include',
         })
         .then(res => res.json())
+        .then(res => RefreshProfil())
         .catch(error => console.log(error))
 
         
@@ -52,7 +55,6 @@ function Profil() {
             password: password
         }
 
-        console.log(DataPasswordSubmit);
         fetch('http://localhost:8000/api/auth/changepwd', {
             headers: {'Content-type': 'application/json'},
             method : 'PUT',

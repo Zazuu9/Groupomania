@@ -3,28 +3,55 @@ import { useState } from "react";
 import Header from "../../components/Header/Header";
 import Post from "../../components/Post/Post";
 import CreatePost from "../../components/Post/CreatePost";
+import ModifyPopup from "../../components/ModifyPopup.jsx/ModifyPopup";
+import "./Dashboard.css";
 
-const Dashboard = () => { 
-    const [posts, setPosts] = useState([])
+const Dashboard = () => {
+    const [posts, setPosts] = useState([]);
+    const [refresh, setRefresh] = useState(false);
+    const [openPopup, setOpenPopup] = useState(false);
+
+    const DisplayPopup = () => {
+        setOpenPopup(true);
+    };
+
+    const RefreshPost = () => {
+        setRefresh(true);
+    };
 
     useEffect(() => {
-    
-        fetch('http://localhost:8000/api/post/', {
-            credentials: 'include',
-        }) 
-        .then(res => res.json())
-        .then(post => {console.log(post); setPosts(post)})
-        .catch(error => console.log(error))
-    }, [])
+        setRefresh(false);
+        fetch("http://localhost:8000/api/post/", {
+            credentials: "include",
+        })
+            .then((res) => res.json())
+            .then((post) => {
+                console.log(post);
+                setPosts(post);
+            })
+            .catch((error) => console.log(error));
+    }, [refresh]);
 
     return (
-        <div>
+        <div className={openPopup ? "scrollBloc" : ""}>
+            {openPopup ? <ModifyPopup open={openPopup} onClose={() => setOpenPopup(false)} /> : ""}
             <Header />
-            <CreatePost />
-            {posts.map(post => <Post id={post.id} userId = {post.userId} message={post.message} imagePost={post.imagePost} pseudo={post.pseudo} imageProfil={post.imageProfil} />)}
-        </div>
-    )
-}
+            <CreatePost RefreshPost={RefreshPost} />
 
+            {posts.map((post) => (
+                <Post
+                    id={post.id}
+                    userId={post.userId}
+                    message={post.message}
+                    imagePost={post.imagePost}
+                    pseudo={post.pseudo}
+                    imageProfil={post.imageProfil}
+                    RefreshPost={RefreshPost}
+                    OpenPopup={DisplayPopup}
+                />
+            ))}
+        </div>
+    );
+};
 
 export default Dashboard;

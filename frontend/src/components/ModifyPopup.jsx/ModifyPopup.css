@@ -1,0 +1,31 @@
+.popup_background {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(128, 128, 128, 0.411);
+}
+.popup {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    top: 45%;
+    left: 0;
+    right: 0;
+    width: 40%;
+    height: 250px;
+    background-color: #fff;
+    border-radius: 25px;
+}
+
+.close_btn {
+    float: right;
+    font-size: 28px;
+    padding-top: 10px;
+    padding-right: 25px;
+    transition: 0.3s;
+}
+
+.close_btn:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
