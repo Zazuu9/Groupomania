@@ -15,7 +15,13 @@
     border-radius: 25px;
 }
 
-.user {
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user_info {
     display: flex;
     align-items: center;
     padding-top: 1%;
@@ -30,6 +36,56 @@
 
 .user_name {
     margin-left: 10px;
+}
+
+.menu {
+    padding-right: 65px;
+}
+
+li {
+    list-style: none !important;
+}
+
+
+nav ul {
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li ul {
+    display: none;
+}
+
+nav ul li:hover .sub_menu {
+    display: list-item !important;
+    position: absolute;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 90px;
+    border-radius: 15px;
+    text-align: center;
+    background-color: #fff
+}
+
+nav ul li:hover .sub_menu {
+    float: none;
+    cursor: pointer;
+    height: 100px;
+}
+
+.modify {
+
+}
+
+.delete{
+    height: 40px;
+    padding-top: 10px;
+    border-radius: 0 0 15px 15px;
+    text-align: center;
+    transition: 0.2s;
+}
+
+.delete:hover {
+    background-color:#FD2D01;
 }
 
 .message {
@@ -47,11 +103,17 @@
     padding-bottom: 10px;
     display: flex;
     justify-content: space-evenly;
+    width: 100%;
 }
 
-.like, .dislike {
+.dislike {
+    margin-left: 5%;
+}
+
+.like, .dislike, .settings {
     font-size: 25px;
 }
+
 
 
 @media screen and (max-width:1250px) {

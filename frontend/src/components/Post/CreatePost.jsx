@@ -13,12 +13,13 @@ function CreatePost() {
         formData.append("image", imagePost)
         console.log(imagePost);
 
+
         fetch('http://localhost:8000/api/post/createpost', {
             method: 'POST',
             credentials: 'include',
             body: formData
         }) 
-        .then(res => {if(res.status === 201)  return res.json()})
+        .then(res => res.json())
         .then(res => {console.log(res);})
         .catch(error => console.error(error))
     }

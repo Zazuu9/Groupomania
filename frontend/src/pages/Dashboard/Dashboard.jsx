@@ -21,7 +21,7 @@ const Dashboard = () => {
         <div>
             <Header />
             <CreatePost />
-            {posts.map(post => <Post userId = {post.userId} message={post.message} imagePost={post.imagePost} pseudo={post.pseudo} imageProfil={post.imageProfil} />)}
+            {posts.map(post => <Post id={post.id} userId = {post.userId} message={post.message} imagePost={post.imagePost} pseudo={post.pseudo} imageProfil={post.imageProfil} />)}
         </div>
     )
 }

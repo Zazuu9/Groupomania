@@ -1,20 +1,20 @@
 const { count } = require('console');
 const { json } = require('express');
 const fs = require('fs');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const Post = require('../models/Post');
 const Posts = require('../models/Post');
 const Reactions = require('../models/Reaction');
 const Users = require('../utils/getUserInfo');
 
 exports.createPost = (req, res ,next) => {
-    const post = new Posts({
+        const post = new Posts({
         userId: req.auth.userId,
         message: req.body.message,
-        imagePost: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+        
     });
-
     post.save()
-    .then(() =>res.status(201).json({message: "Publication enregistré"}))
+    .then(() =>res.status(201).json({message: "Publication enregistré avec succes"}))
     .catch((error) => res.status(400).json({ error }));
 };
 
@@ -25,6 +25,7 @@ exports.getAllPost = async (req, res, next) => {
         const Postmap = await Promise.all(Post.map(async (Data) => {
         const UserInfo = await Users.GetUserInfo(Data.userId)
         return { 
+            id: Data._id,
             userId: Data.userId,
             message: Data.message,
             imagePost: Data.imagePost,
@@ -34,9 +35,6 @@ exports.getAllPost = async (req, res, next) => {
     }))
     res.status(200).json(Postmap)
 } catch (error) {res.status(400).json({error})}
-
-    /*.then((post) => res.status(200).json(post))
-    .catch(error => res.status(400).json({error}))*/
 };
 
 exports.getOnePost = (req, res, next) => {
@@ -52,16 +50,31 @@ exports.getOnePost = (req, res, next) => {
 }
 
 exports.modifyPost = (req, res ,next) => {
-    Posts.updateOne({_userId: req.params.userId}, {...req.body, _userId: req.params.userId})
+
+    Posts.updateOne({_userId: req.params.userId}, {userId: req.params.userId})
     .then((post) => res.status(201).json(post))
     .catch(error => res.status(500).json({error}))
 };
 
-exports.deletePost = (req, res, next) => {
-    Posts.deleteOne({_id: req.params.id})
-    .then((post) => res.status(201).json(post))
+exports.deletePost =  (req, res, next) => {
+    Posts.findOne({_id: req.params.id})
+    .then((post) => {
+        console.log(post);
+        console.log(post.userId);
+        console.log(req.auth.userId)
+        if (post.userId === req.auth.userId) {
+            
+            Posts.deleteOne({_id: post.id})
+            .then((post) => {res.status(201).json(post)})
+            .catch(error => res.status(500).json({error}))
+            console.log("OUI");
+        } else {
+            console.log("NON");
+            console.log(post.id);
+        }
+    })
     .catch(error => res.status(500).json({error}))
-};
+}
 
 exports.addReaction = (req ,res) => {
     if (!["like", "dislike"].includes(req.body.type)) {return res.status(400).json({message: "Merci d'envoyer un type valide"})}
