@@ -4,9 +4,11 @@ module.exports = (req, res, next) => {
     try {
         const token = req.cookies.Token;
         const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
+        const role = decodedToken.role;
         const userId = decodedToken.userId;
         req.auth = {
             userId: userId,
+            role: role,
         };
         next();
     } catch (error) {

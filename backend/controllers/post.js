@@ -62,8 +62,9 @@ exports.getOnePost = (req, res, next) => {
 
 exports.modifyPost = (req, res, next) => {
     Posts.findOne({ _id: req.params.id })
+
         .then((post) => {
-            if (post.userId === req.auth.userId) {
+            if (req.auth.role === "admin" || post.userId === req.auth.userId) {
                 const modifyPost = req.file
                     ? {
                           message: req.body.message,
@@ -87,12 +88,12 @@ exports.modifyPost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
     Posts.findOne({ _id: req.params.id })
         .then((post) => {
-            if (post.userId === req.auth.userId) {
+            if (req.auth.role === "admin" || post.userId === req.auth.userId) {
                 Posts.deleteOne({ _id: post.id })
                     .then((post) => {
                         res.status(201).json(post);
                     })
-                    .catch((error) => res.status(500).json({ error }));
+                    .catch((error) => res.status(500).json({ message: "test" }));
             } else {
                 return res
                     .status(401)

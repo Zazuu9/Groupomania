@@ -4,7 +4,6 @@ import "./ModifyPopup.css";
 const ModifyPopup = ({ open, onClose, id, RefreshPost }) => {
     const [message, setMessage] = useState("");
     const [imagePost, setimagePost] = useState(null);
-    console.log();
 
     const ModifyPost = (e) => {
         e.preventDefault();
@@ -14,7 +13,6 @@ const ModifyPopup = ({ open, onClose, id, RefreshPost }) => {
         formData.append("image", imagePost);
 
         fetch(`http://localhost:8000/api/post/${id}`, {
-            headers: { "Content-Type": "application/json", Accept: "application/json" },
             method: "PUT",
             credentials: "include",
             body: formData,

@@ -8,7 +8,6 @@ function Post(props) {
     const [like, setLike] = useState("");
 
     const DeletePost = () => {
-        console.log(props);
         fetch(`http://localhost:8000/api/post/${props.id}`, {
             method: "DELETE",
             credentials: "include",
