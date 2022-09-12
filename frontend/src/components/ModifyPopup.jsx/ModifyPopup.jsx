@@ -1,31 +1,28 @@
 import React, { useState } from "react";
 import "./ModifyPopup.css";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const ModifyPopup = ({ open, onClose }) => {
+const ModifyPopup = ({ open, onClose, id, RefreshPost }) => {
     const [message, setMessage] = useState("");
-    //const [imagePost, setimagePost] = useState(null);
+    const [imagePost, setimagePost] = useState(null);
+    console.log();
 
-    const ModifyPost = (e, props) => {
+    const ModifyPost = (e) => {
         e.preventDefault();
 
-        const DataSubmit = {
-            message: message,
-        };
-        // let formData = new FormData();
-        // formData.append("message", message);
-        // //formData.append("image", imagePost);
+        let formData = new FormData();
+        formData.append("message", message);
+        formData.append("image", imagePost);
 
-        fetch(`http://localhost:8000/api/post/${props.id}`, {
-            headers: { Accept: "application/json", "Content-type": "multipart/form-data" },
+        fetch(`http://localhost:8000/api/post/${id}`, {
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
             method: "PUT",
             credentials: "include",
-            body: JSON.stringify(DataSubmit),
+            body: formData,
         })
             .then((res) => res.json())
             .then((res) => {
-                props.RefreshPost();
+                onClose();
+                RefreshPost();
             })
             .catch((error) => console.error(error));
     };
@@ -34,9 +31,8 @@ const ModifyPopup = ({ open, onClose }) => {
     return (
         <div className="popup_background">
             <div className="popup">
-                <FontAwesomeIcon icon={faXmark} onClick={onClose} className="close_btn" />
                 <form method="put" className="form_modify_post">
-                    <label htmlFor="message">
+                    <label htmlFor="message" className="label_modify_message">
                         {" "}
                         Message :
                         <input
@@ -44,10 +40,11 @@ const ModifyPopup = ({ open, onClose }) => {
                             onChange={(e) => setMessage(e.target.value)}
                             name="message"
                             id="message"
+                            className="input_message"
                             placeholder="Entrez votre message "
                         />
                     </label>
-                    {/* <label for="imagePost" className="imagePost">
+                    <label htmlFor="imagePost" className="image_modify_post">
                         Choisir une photo :{" "}
                         <input
                             type="file"
@@ -56,8 +53,13 @@ const ModifyPopup = ({ open, onClose }) => {
                             name="imagePost"
                             accept="image/png; image/jpeg, image/jpg"
                         />
-                    </label> */}
-                    <input type="" class="publish_btn" value="Modifier" onClick={ModifyPost} />
+                    </label>
+                    <div className="btn_modify_post">
+                        <input type="submit" class="modify_post_btn" value="Modifier" onClick={ModifyPost} />
+                        <button onClick={onClose} className="close_btn">
+                            Annuler
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

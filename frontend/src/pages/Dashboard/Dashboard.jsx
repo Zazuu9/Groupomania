@@ -10,6 +10,11 @@ const Dashboard = () => {
     const [posts, setPosts] = useState([]);
     const [refresh, setRefresh] = useState(false);
     const [openPopup, setOpenPopup] = useState(false);
+    const [postId, setPostId] = useState("");
+
+    const getId = (id) => {
+        setPostId(id);
+    };
 
     const DisplayPopup = () => {
         setOpenPopup(true);
@@ -26,7 +31,6 @@ const Dashboard = () => {
         })
             .then((res) => res.json())
             .then((post) => {
-                console.log(post);
                 setPosts(post);
             })
             .catch((error) => console.log(error));
@@ -34,13 +38,23 @@ const Dashboard = () => {
 
     return (
         <div className={openPopup ? "scrollBloc" : ""}>
-            {openPopup ? <ModifyPopup open={openPopup} onClose={() => setOpenPopup(false)} /> : ""}
+            {openPopup ? (
+                <ModifyPopup
+                    id={postId}
+                    open={openPopup}
+                    RefreshPost={RefreshPost}
+                    onClose={() => setOpenPopup(false)}
+                />
+            ) : (
+                ""
+            )}
             <Header />
             <CreatePost RefreshPost={RefreshPost} />
 
             {posts.map((post) => (
                 <Post
                     id={post.id}
+                    key={post.id}
                     userId={post.userId}
                     message={post.message}
                     imagePost={post.imagePost}
@@ -48,6 +62,7 @@ const Dashboard = () => {
                     imageProfil={post.imageProfil}
                     RefreshPost={RefreshPost}
                     OpenPopup={DisplayPopup}
+                    getId={getId}
                 />
             ))}
         </div>

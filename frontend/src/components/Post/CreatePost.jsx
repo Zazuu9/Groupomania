@@ -4,6 +4,7 @@ import "./CreatePost.css";
 function CreatePost(props) {
     const [message, setMessage] = useState("");
     const [imagePost, setimagePost] = useState(null);
+    const [error, setError] = useState("");
 
     const CreatePostSubmit = (e) => {
         e.preventDefault();
@@ -11,7 +12,6 @@ function CreatePost(props) {
         let formData = new FormData();
         formData.append("message", message);
         formData.append("image", imagePost);
-        console.log(imagePost);
 
         fetch("http://localhost:8000/api/post/createpost", {
             method: "POST",
@@ -20,6 +20,11 @@ function CreatePost(props) {
         })
             .then((res) => res.json())
             .then((res) => {
+                setError(res.message);
+                setTimeout(() => {
+                    setError("");
+                }, "1000");
+
                 props.RefreshPost();
             })
             .catch((error) => console.error(error));
@@ -36,6 +41,7 @@ function CreatePost(props) {
                         name="message"
                         id="message"
                         className="input_message"
+                        placeholder="Entrez votre message "
                     />
                 </label>
                 <label for="imagePost" className="imagePost">
@@ -48,6 +54,7 @@ function CreatePost(props) {
                         accept="image/png; image/jpeg, image/jpg"
                     />
                 </label>
+                {error !== "" ? <div className="signin_error">{error}</div> : ""}
                 <input type="submit" id="login" class="publish_btn" value="Publier" onClick={CreatePostSubmit} />
             </form>
         </main>

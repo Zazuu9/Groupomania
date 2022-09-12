@@ -4,11 +4,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faThumbsDown, faGear } from "@fortawesome/free-solid-svg-icons";
 
 function Post(props) {
+    const id = props.id;
+    const [like, setLike] = useState("");
+
     const DeletePost = () => {
         console.log(props);
         fetch(`http://localhost:8000/api/post/${props.id}`, {
             method: "DELETE",
             credentials: "include",
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                props.RefreshPost();
+            })
+            .catch((error) => console.error(error));
+    };
+
+    const LikeStatus = (likeStatus) => {
+        fetch(`http://localhost:8000/api/post/reaction/${id}`, {
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            method: "POST",
+            credentials: "include",
+            body: JSON.stringify({ type: likeStatus }),
         })
             .then((res) => res.json())
             .then((res) => {
@@ -31,7 +48,13 @@ function Post(props) {
                                 <FontAwesomeIcon icon={faGear} className="settings" />
                                 <ul className="sub_menu">
                                     <li>
-                                        <p className="modify" onClick={() => props.OpenPopup()}>
+                                        <p
+                                            className="modify"
+                                            onClick={() => {
+                                                props.OpenPopup();
+                                                props.getId(id);
+                                            }}
+                                        >
                                             Modifier
                                         </p>
                                     </li>
@@ -48,8 +71,8 @@ function Post(props) {
                 <p className="message">{props.message}</p>
                 <img src={props.imagePost} alt="" className="PostImage" />
                 <section className="like_dislike">
-                    <FontAwesomeIcon icon={faThumbsUp} className="like" />
-                    <FontAwesomeIcon icon={faThumbsDown} className="dislike" />
+                    <FontAwesomeIcon icon={faThumbsUp} className="like" onClick={() => LikeStatus("like")} />
+                    <FontAwesomeIcon icon={faThumbsDown} className="dislike" onClick={() => LikeStatus("dislike")} />
                 </section>
             </article>
         </div>

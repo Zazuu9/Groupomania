@@ -17,15 +17,80 @@
     border-radius: 25px;
 }
 
+.imagePost {
+    display: flex;
+    padding-left: 20%;
+}
+
+.btn_modify_post {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.modify_post_btn {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: #fd2d01;
+    border: solid 1px #4e5166;
+    width: 110px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
 .close_btn {
-    float: right;
-    font-size: 28px;
-    padding-top: 10px;
-    padding-right: 25px;
-    transition: 0.3s;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: #fff;
+    background-color: #4e5166;
+    border: solid 1px #4e5166;
+    width: 110px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.25s;
 }
 
 .close_btn:hover {
     cursor: pointer;
-    transform: scale(1.1);
+    transform: scale(1.08);
+}
+
+.signin_error {
+    color: #fd2d01;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 1250px) {
+    .popup {
+        width: 50%;
+    }
+    .label_modify_message {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .popup {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 530px) {
+    .image_modify_post {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    #imagePost {
+        padding-top: 10px;
+    }
 }

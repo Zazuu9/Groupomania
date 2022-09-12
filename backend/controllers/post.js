@@ -8,7 +8,6 @@ const Reactions = require("../models/Reaction");
 const Users = require("../utils/getUserInfo");
 
 exports.createPost = (req, res, next) => {
-    console.log(req.body);
     const toAdd = req.file
         ? {
               userId: req.auth.userId,
@@ -24,7 +23,7 @@ exports.createPost = (req, res, next) => {
     });
     post.save()
         .then(() => res.status(201).json({ message: "Publication enregistré avec succes" }))
-        .catch((error) => res.status(400).json({ error }));
+        .catch((error) => res.status(400).json({ error: error, message: "Impossible de publier un post vide !" }));
 };
 
 exports.getAllPost = async (req, res, next) => {
@@ -62,9 +61,8 @@ exports.getOnePost = (req, res, next) => {
 };
 
 exports.modifyPost = (req, res, next) => {
-    Posts.findOne({ id: req.params.id })
+    Posts.findOne({ _id: req.params.id })
         .then((post) => {
-            console.log(post);
             if (post.userId === req.auth.userId) {
                 const modifyPost = req.file
                     ? {
@@ -73,10 +71,8 @@ exports.modifyPost = (req, res, next) => {
                       }
                     : {
                           message: req.body.message,
-                          imagePost: null,
                       };
-                console.log(modifyPost);
-                Posts.updateOne({ ...modifyPost })
+                Posts.updateOne({ _id: req.params.id }, { ...modifyPost })
                     .then((post) => res.status(200).json({ message: "Post modifié !" }))
                     .catch((error) => res.status(501).json({ error }));
             } else {
@@ -107,13 +103,18 @@ exports.deletePost = (req, res, next) => {
 };
 
 exports.addReaction = (req, res) => {
-    if (!["like", "dislike"].includes(req.body.type)) {
-        return res.status(400).json({ message: "Merci d'envoyer un type valide" });
-    }
     Reactions.findOne({ postId: req.params.id, userId: req.auth.userId })
         .then((reaction) => {
             if (reaction) {
-                return res.status(200).json({ message: "Réaction déja existante !" });
+                const ReactionUpdtate = {
+                    _id: reaction._id,
+                    userId: req.auth.userId,
+                    postId: req.params.id,
+                    type: req.body.type,
+                };
+                Reactions.updateOne({ postId: req.params.id }, { ...ReactionUpdtate })
+                    .then((reaction) => res.status(200).json({ message: "Réaction mise à jour !" }))
+                    .catch((error) => res.status(500).json({ error }));
             }
             if (!reaction) {
                 const reaction = new Reactions({
@@ -131,9 +132,6 @@ exports.addReaction = (req, res) => {
 };
 
 exports.updateReaction = (req, res) => {
-    if (!["like", "dislike"].includes(req.body.type)) {
-        return res.status(400).json({ message: "Merci d'envoyer un type valide" });
-    }
     Reactions.findOne({ postId: req.params.id, userId: req.auth.userId })
         .then((reaction) => {
             if (!reaction) {
