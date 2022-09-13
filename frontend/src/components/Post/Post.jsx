@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import "./Post.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsUp, faHeart, faGear } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faGear } from "@fortawesome/free-solid-svg-icons";
 
 function Post(props) {
     const id = props.id;
     const [like, setLike] = useState(1);
+    const [isliked, setIsLiked] = useState(false);
+
+    const LikeButton = () => {
+        setIsLiked((current) => !current);
+    };
 
     const DeletePost = () => {
         fetch(`http://localhost:8000/api/post/${props.id}`, {
@@ -75,13 +80,20 @@ function Post(props) {
                 <section className="like">
                     <FontAwesomeIcon
                         icon={faHeart}
+                        id="like"
+                        style={{
+                            color: isliked ? "#fd2d01" : "",
+                        }}
                         onClick={() => {
                             if (like === 1) {
                                 setLike(0);
+                                LikeButton();
                             } else if (like === undefined) {
                                 setLike(1);
+                                LikeButton();
                             } else {
                                 setLike(1);
+                                LikeButton();
                             }
                             LikePost();
                         }}

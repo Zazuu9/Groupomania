@@ -1,0 +1,27 @@
+.logo_404 {
+    margin-top: -50px;
+    margin-left: -45px;
+    width: 680px;
+}
+
+.error_message {
+    margin-top: -50px;
+    text-align: center;
+}
+
+@media screen and (max-width: 800px) {
+    main {
+    }
+
+    .logo_404 {
+        margin: 0;
+        margin-top: 50px;
+        margin-left: -40px;
+        width: 500px;
+    }
+
+    .error_message {
+        margin: 0;
+        width: 70%;
+    }
+}

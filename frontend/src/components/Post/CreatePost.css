@@ -10,7 +10,7 @@
 .publish_btn {
     margin-top: 30px;
     margin-bottom: 30px;
-    background-color: #fd2d01;
+    background-color: #ffd7d7;
     border: solid 1px #4e5166;
     width: 110px;
     height: 40px;
@@ -21,6 +21,7 @@
 }
 
 .publish_btn:hover {
+    background-color: #fd2d01;
     transform: scale(1.08);
 }
 

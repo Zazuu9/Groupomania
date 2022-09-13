@@ -37,14 +37,12 @@ exports.getAllPost = async (req, res, next) => {
                     message: Data.message,
                     imagePost: Data.imagePost,
                     likes: Data.likes,
-
                     pseudo: UserInfo.pseudo,
                     imageProfil: UserInfo.imageProfil,
                 };
             })
         );
         res.status(200).json(Postmap);
-        console.log(Postmap);
     } catch (error) {
         res.status(400).json({ error });
     }
@@ -103,7 +101,6 @@ exports.deletePost = (req, res, next) => {
 exports.likePost = async (req, res, next) => {
     const post = await Posts.findOne({ _id: req.params.id });
     if (req.body.like === 1) {
-        console.log("test");
         Posts.updateOne(
             { _id: req.params.id },
             {
@@ -115,7 +112,6 @@ exports.likePost = async (req, res, next) => {
             .then((post) => res.status(200).json({ message: "Ajout Like" }))
             .catch((error) => res.status(400).json({ error }));
     } else {
-        console.log("test2");
         Posts.findOne({ _id: req.params.id })
             .then((post) => {
                 Posts.updateOne(

@@ -7,7 +7,6 @@ function Profil() {
     const [pseudo, setPseudo] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [file, setFile] = useState(null);
     const [refresh, setRefresh] = useState(false);
     const [error, setError] = useState("");
     const [errorPassword, setErrorPassword] = useState("");

@@ -31,7 +31,7 @@
     text-align: center;
     margin-top: 30px;
     margin-bottom: 30px;
-    background-color: #fd2d01;
+    background-color: #ffd7d7;
     border: solid 1px #4e5166;
     width: 110px;
     height: 40px;
@@ -39,6 +39,12 @@
     border-radius: 5px;
     cursor: pointer;
     transition: 0.25s;
+}
+
+.modify_post_btn:hover {
+    background-color: #fd2d01;
+    cursor: pointer;
+    transform: scale(1.08);
 }
 
 .close_btn {
