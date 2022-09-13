@@ -2,9 +2,7 @@ const { count } = require("console");
 const { json } = require("express");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
-const Post = require("../models/Post");
 const Posts = require("../models/Post");
-const Reactions = require("../models/Reaction");
 const Users = require("../utils/getUserInfo");
 
 exports.createPost = (req, res, next) => {
@@ -38,12 +36,15 @@ exports.getAllPost = async (req, res, next) => {
                     userId: Data.userId,
                     message: Data.message,
                     imagePost: Data.imagePost,
+                    likes: Data.likes,
+
                     pseudo: UserInfo.pseudo,
                     imageProfil: UserInfo.imageProfil,
                 };
             })
         );
         res.status(200).json(Postmap);
+        console.log(Postmap);
     } catch (error) {
         res.status(400).json({ error });
     }
@@ -52,17 +53,13 @@ exports.getAllPost = async (req, res, next) => {
 exports.getOnePost = (req, res, next) => {
     Posts.findOne({ _id: req.params.id })
         .then((post) => {
-            Reactions.find({ postId: post.id }).then((reactions) => {
-                post.reactions = reactions;
-                res.status(200).json(post);
-            });
+            res.status(200).json(post);
         })
         .catch((error) => res.status(404).json({ error }));
 };
 
 exports.modifyPost = (req, res, next) => {
     Posts.findOne({ _id: req.params.id })
-
         .then((post) => {
             if (req.auth.role === "admin" || post.userId === req.auth.userId) {
                 const modifyPost = req.file
@@ -103,61 +100,33 @@ exports.deletePost = (req, res, next) => {
         .catch((error) => res.status(500).json({ error }));
 };
 
-exports.addReaction = (req, res) => {
-    Reactions.findOne({ postId: req.params.id, userId: req.auth.userId })
-        .then((reaction) => {
-            if (reaction) {
-                const ReactionUpdtate = {
-                    _id: reaction._id,
-                    userId: req.auth.userId,
-                    postId: req.params.id,
-                    type: req.body.type,
-                };
-                Reactions.updateOne({ postId: req.params.id }, { ...ReactionUpdtate })
-                    .then((reaction) => res.status(200).json({ message: "Réaction mise à jour !" }))
-                    .catch((error) => res.status(500).json({ error }));
+exports.likePost = async (req, res, next) => {
+    const post = await Posts.findOne({ _id: req.params.id });
+    if (req.body.like === 1) {
+        console.log("test");
+        Posts.updateOne(
+            { _id: req.params.id },
+            {
+                //$push: { usersLiked: req.auth.userId },
+                $addToSet: { usersLiked: req.auth.userId },
+                $inc: { likes: req.body.like },
             }
-            if (!reaction) {
-                const reaction = new Reactions({
-                    userId: req.auth.userId,
-                    postId: req.params.id,
-                    type: req.body.type,
-                });
-                reaction
-                    .save()
-                    .then((reaction) => res.status(201).json({ message: "Réaction ajoutée !" }))
-                    .catch((error) => res.status(500).json({ error }));
-            }
-        })
-        .catch((error) => res.status(500).json(error));
-};
-
-exports.updateReaction = (req, res) => {
-    Reactions.findOne({ postId: req.params.id, userId: req.auth.userId })
-        .then((reaction) => {
-            if (!reaction) {
-                return res.status(404).json({ message: "Pas de réaction trouvé !" });
-            }
-            if (reaction) {
-                Reactions.updateOne({ postId: req.params.id, userId: req.auth.userId, type: req.body.type })
-                    .then((reaction) => res.status(201).json({ message: "Réaction modifié !" }))
-                    .catch((error) => res.status(500).json({ error }));
-            }
-        })
-        .catch((error) => res.status(500).json(error));
-};
-
-exports.deleteReaction = (req, res) => {
-    Reactions.findOne({ postId: req.params.id, userId: req.auth.userId })
-        .then((reaction) => {
-            if (!reaction) {
-                return res.status(404).json({ message: "Aucune réaction trouvé !" });
-            }
-            if (req.auth.userId == reaction.userId) {
-                Reactions.deleteOne({ _id: reaction._id })
-                    .then((reaction) => res.status(201).json({ message: "Réaction supprimé !" }))
-                    .catch((error) => res.status(500).json(error));
-            }
-        })
-        .catch((error) => res.status(500).json(error));
+        )
+            .then((post) => res.status(200).json({ message: "Ajout Like" }))
+            .catch((error) => res.status(400).json({ error }));
+    } else {
+        console.log("test2");
+        Posts.findOne({ _id: req.params.id })
+            .then((post) => {
+                Posts.updateOne(
+                    { _id: req.params.id },
+                    { $pull: { usersLiked: req.auth.userId }, $inc: { likes: -01 } }
+                )
+                    .then((post) => {
+                        res.status(200).json({ message: "Suppression Like" });
+                    })
+                    .catch((error) => res.status(400).json({ error }));
+            })
+            .catch((error) => res.status(400).json({ error }));
+    }
 };

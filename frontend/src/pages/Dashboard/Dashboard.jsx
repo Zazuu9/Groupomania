@@ -60,6 +60,7 @@ const Dashboard = () => {
                     imagePost={post.imagePost}
                     pseudo={post.pseudo}
                     imageProfil={post.imageProfil}
+                    likes={post.likes}
                     RefreshPost={RefreshPost}
                     OpenPopup={DisplayPopup}
                     getId={getId}

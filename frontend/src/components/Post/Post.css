@@ -52,6 +52,7 @@ nav ul {
 
 nav ul li ul {
     display: none;
+    list-style: none;
 }
 
 nav ul li:hover .sub_menu {
@@ -93,22 +94,19 @@ nav ul li:hover .sub_menu {
     margin-bottom: 1%;
 }
 
-.like_dislike {
-    padding-top: 5px;
-    padding-bottom: 10px;
-    display: flex;
-    justify-content: space-evenly;
-    width: 100%;
-}
-
-.dislike {
-    margin-left: 5%;
-}
-
 .like,
-.dislike,
 .settings {
+    cursor: pointer;
     font-size: 25px;
+}
+
+.like {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.like:before {
+    color: green;
 }
 
 @media screen and (max-width: 1250px) {

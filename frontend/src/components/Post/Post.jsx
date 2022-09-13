@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./Post.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsUp, faThumbsDown, faGear } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp, faHeart, faGear } from "@fortawesome/free-solid-svg-icons";
 
 function Post(props) {
     const id = props.id;
-    const [like, setLike] = useState("");
+    const [like, setLike] = useState(1);
 
     const DeletePost = () => {
         fetch(`http://localhost:8000/api/post/${props.id}`, {
@@ -19,12 +19,15 @@ function Post(props) {
             .catch((error) => console.error(error));
     };
 
-    const LikeStatus = (likeStatus) => {
-        fetch(`http://localhost:8000/api/post/reaction/${id}`, {
-            headers: { "Content-Type": "application/json", Accept: "application/json" },
+    const LikePost = () => {
+        const LikeSubmit = {
+            like: like,
+        };
+        fetch(`http://localhost:8000/api/post/like/${props.id}`, {
             method: "POST",
+            headers: { Accept: "*/*", "Content-Type": "application/json" },
+            body: JSON.stringify(LikeSubmit),
             credentials: "include",
-            body: JSON.stringify({ type: likeStatus }),
         })
             .then((res) => res.json())
             .then((res) => {
@@ -49,7 +52,7 @@ function Post(props) {
                                     <li>
                                         <p
                                             className="modify"
-                                            onClick={() => {
+                                            onClick={(e) => {
                                                 props.OpenPopup();
                                                 props.getId(id);
                                             }}
@@ -69,9 +72,21 @@ function Post(props) {
                 </div>
                 <p className="message">{props.message}</p>
                 <img src={props.imagePost} alt="" className="PostImage" />
-                <section className="like_dislike">
-                    <FontAwesomeIcon icon={faThumbsUp} className="like" onClick={() => LikeStatus("like")} />
-                    <FontAwesomeIcon icon={faThumbsDown} className="dislike" onClick={() => LikeStatus("dislike")} />
+                <section className="like">
+                    <FontAwesomeIcon
+                        icon={faHeart}
+                        onClick={() => {
+                            if (like === 1) {
+                                setLike(0);
+                            } else if (like === undefined) {
+                                setLike(1);
+                            } else {
+                                setLike(1);
+                            }
+                            LikePost();
+                        }}
+                    />
+                    <p>{props.likes}</p>
                 </section>
             </article>
         </div>
