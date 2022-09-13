@@ -9,7 +9,7 @@ Dans le dossier Backend
 ```
 cd backend
 
-npm i 'nom du package'
+npm i 
 
 ```
 
@@ -18,7 +18,7 @@ Dans le dossier Frontend
 ```
 cd frontend
 
-npm i 'nom du package'
+npm i 
 ```
 
 
