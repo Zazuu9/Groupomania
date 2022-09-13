@@ -17,8 +17,10 @@ Assurez vous d'avoir "nodemon" d'installer également.
 Lancer deux terminals distincts :
   le premier sur => 
 ```
+
   cd backend
   nodemon server
+  
 ```
   
   le deuxième sur => 
