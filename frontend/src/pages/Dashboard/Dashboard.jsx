@@ -70,6 +70,8 @@ const Dashboard = () => {
                     RefreshPost={RefreshPost}
                     OpenPopup={DisplayPopup}
                     getId={getId}
+                    likestatus={post.likestatus}
+                    settings={post.settings}
                 />
             ))}
         </div>

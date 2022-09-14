@@ -5,13 +5,6 @@ import { faHeart, faGear } from "@fortawesome/free-solid-svg-icons";
 
 function Post(props) {
     const id = props.id;
-    const [like, setLike] = useState(1);
-    const [isliked, setIsLiked] = useState(false);
-
-    const LikeButton = () => {
-        setIsLiked((current) => !current);
-    };
-
     const DeletePost = () => {
         fetch(`http://localhost:8000/api/post/${props.id}`, {
             method: "DELETE",
@@ -25,13 +18,16 @@ function Post(props) {
     };
 
     const LikePost = () => {
-        const LikeSubmit = {
-            like: like,
-        };
+        let like;
+        if (props.likestatus) {
+            like = false;
+        } else {
+            like = true;
+        }
         fetch(`http://localhost:8000/api/post/like/${props.id}`, {
             method: "POST",
             headers: { Accept: "*/*", "Content-Type": "application/json" },
-            body: JSON.stringify(LikeSubmit),
+            body: JSON.stringify({ like: like }),
             credentials: "include",
         })
             .then((res) => res.json())
@@ -52,7 +48,8 @@ function Post(props) {
                     <nav className="menu">
                         <ul>
                             <li>
-                                <FontAwesomeIcon icon={faGear} className="settings" />
+                                {props.settings ? <FontAwesomeIcon icon={faGear} className="settings" /> : ""}
+
                                 <ul className="sub_menu">
                                     <li>
                                         <p
@@ -82,19 +79,9 @@ function Post(props) {
                         icon={faHeart}
                         id="like"
                         style={{
-                            color: isliked ? "#fd2d01" : "",
+                            color: props.likestatus ? "#fd2d01" : "",
                         }}
                         onClick={() => {
-                            if (like === 1) {
-                                setLike(0);
-                                LikeButton();
-                            } else if (like === undefined) {
-                                setLike(1);
-                                LikeButton();
-                            } else {
-                                setLike(1);
-                                LikeButton();
-                            }
                             LikePost();
                         }}
                     />

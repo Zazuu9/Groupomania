@@ -44,7 +44,7 @@ function CreatePost(props) {
                         placeholder="Entrez votre message "
                     />
                 </label>
-                <label for="imagePost" className="imagePost">
+                <label htmlFor="imagePost" className="imagePost">
                     Choisir une photo :{" "}
                     <input
                         type="file"
@@ -55,7 +55,7 @@ function CreatePost(props) {
                     />
                 </label>
                 {error !== "" ? <div className="signin_error">{error}</div> : ""}
-                <input type="submit" id="login" class="publish_btn" value="Publier" onClick={CreatePostSubmit} />
+                <input type="submit" id="login" className="publish_btn" value="Publier" onClick={CreatePostSubmit} />
             </form>
         </main>
     );

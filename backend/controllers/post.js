@@ -40,6 +40,8 @@ exports.getAllPost = async (req, res, next) => {
                     pseudo: UserInfo.pseudo,
                     imageProfil: UserInfo.imageProfil,
                     creationDate: Data.creationDate,
+                    likestatus: Data.usersLiked.includes(req.auth.userId),
+                    settings: req.auth.role === "admin" || req.auth.userId === Data.userId,
                 };
             })
         );
@@ -101,7 +103,7 @@ exports.deletePost = (req, res, next) => {
 
 exports.likePost = async (req, res, next) => {
     const post = await Posts.findOne({ _id: req.params.id });
-    if (req.body.like === 1) {
+    if (req.body.like === true) {
         Posts.updateOne(
             { _id: req.params.id },
             {
@@ -115,10 +117,7 @@ exports.likePost = async (req, res, next) => {
     } else {
         Posts.findOne({ _id: req.params.id })
             .then((post) => {
-                Posts.updateOne(
-                    { _id: req.params.id },
-                    { $pull: { usersLiked: req.auth.userId }, $inc: { likes: -01 } }
-                )
+                Posts.updateOne({ _id: req.params.id }, { $pull: { usersLiked: req.auth.userId }, $inc: { likes: -1 } })
                     .then((post) => {
                         res.status(200).json({ message: "Suppression Like" });
                     })
