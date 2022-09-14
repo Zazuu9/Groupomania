@@ -2,35 +2,45 @@
 
 Le projet consiste à construire un réseau social d'entreprise pour faciliter les échanges entre collègues.
 
+### Package à installer:
 
+Dans le dossier Backend
+ 
+```
+cd backend
 
-### Pré-requis
+npm i 
 
-Cloner le projet,
-ensuite en étant à la racine du projet  lancer
+```
 
-Assurez vous d'avoir "nodemon" d'installer également.
+Dans le dossier Frontend
+ 
+```
+cd frontend
+
+npm i 
+```
+
 
 
 ## Démarrage
 
-Lancer deux terminals distincts :
-  
-  
-  le premier sur => 
+Démarrez le serveur nodemon
 ```
-
   cd backend
   nodemon server
-  
+ 
 ```
   
-  le deuxième sur => 
+  Démarrez le serveur React
 ```
-
   cd frontend
   npm start
+```
 
+## Généré le fichier .env
+```
+Créez un fichier .env dans le dossier backend et y mettre les adresses serveur et Token privé
 ```
 
 ## Fabriqué avec
