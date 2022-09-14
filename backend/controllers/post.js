@@ -39,6 +39,7 @@ exports.getAllPost = async (req, res, next) => {
                     likes: Data.likes,
                     pseudo: UserInfo.pseudo,
                     imageProfil: UserInfo.imageProfil,
+                    creationDate: Data.creationDate,
                 };
             })
         );

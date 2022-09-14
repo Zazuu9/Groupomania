@@ -6,6 +6,7 @@ const postsSchema = mongoose.Schema({
     imagePost: { type: String, required: false },
     likes: { type: Number, required: true, default: 0 },
     usersLiked: { type: Array, required: false },
+    creationDate: { type: Date, default: Date.now, required: true },
 });
 
 module.exports = mongoose.model("Posts", postsSchema);

@@ -12,6 +12,10 @@ const Dashboard = () => {
     const [openPopup, setOpenPopup] = useState(false);
     const [postId, setPostId] = useState("");
 
+    const sortData = (a, b) => {
+        return new Date(b.creationDate) - new Date(a.creationDate);
+    };
+
     const getId = (id) => {
         setPostId(id);
     };
@@ -31,6 +35,7 @@ const Dashboard = () => {
         })
             .then((res) => res.json())
             .then((post) => {
+                post.sort(sortData);
                 setPosts(post);
             })
             .catch((error) => console.log(error));
@@ -61,6 +66,7 @@ const Dashboard = () => {
                     pseudo={post.pseudo}
                     imageProfil={post.imageProfil}
                     likes={post.likes}
+                    creationDate={post.creationDate}
                     RefreshPost={RefreshPost}
                     OpenPopup={DisplayPopup}
                     getId={getId}
