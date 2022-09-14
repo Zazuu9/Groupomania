@@ -9,7 +9,7 @@ exports.createPost = (req, res, next) => {
     const toAdd = req.file
         ? {
               userId: req.auth.userId,
-              message: req.body.message,
+              message: req.body.message || " ",
               imagePost: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
           }
         : {

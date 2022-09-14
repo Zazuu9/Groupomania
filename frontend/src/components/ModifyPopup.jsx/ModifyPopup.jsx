@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ModifyPopup.css";
 
-const ModifyPopup = ({ open, onClose, id, RefreshPost }) => {
+const ModifyPopup = ({ open, onClose, id, RefreshPost, Message }) => {
     const [message, setMessage] = useState("");
     const [imagePost, setimagePost] = useState(null);
 
@@ -9,8 +9,15 @@ const ModifyPopup = ({ open, onClose, id, RefreshPost }) => {
         e.preventDefault();
 
         let formData = new FormData();
-        formData.append("message", message);
-        formData.append("image", imagePost);
+
+        if (message === "") {
+            formData.append("message", Message);
+
+            formData.append("image", imagePost);
+        } else {
+            formData.append("message", message);
+            formData.append("image", imagePost);
+        }
 
         fetch(`http://localhost:8000/api/post/${id}`, {
             method: "PUT",
@@ -35,11 +42,12 @@ const ModifyPopup = ({ open, onClose, id, RefreshPost }) => {
                         Message :
                         <input
                             type="text"
+                            maxLength={200}
                             onChange={(e) => setMessage(e.target.value)}
                             name="message"
                             id="message"
                             className="input_message"
-                            placeholder="Entrez votre message "
+                            placeholder={Message}
                         />
                     </label>
                     <label htmlFor="imagePost" className="image_modify_post">

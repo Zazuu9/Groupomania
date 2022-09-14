@@ -10,8 +10,13 @@ function CreatePost(props) {
         e.preventDefault();
 
         let formData = new FormData();
-        formData.append("message", message);
-        formData.append("image", imagePost);
+        if (message === "") {
+            formData.append("message", message);
+            formData.append("image", imagePost);
+        } else {
+            formData.append("message", message);
+            formData.append("image", imagePost);
+        }
 
         fetch("http://localhost:8000/api/post/createpost", {
             method: "POST",
@@ -21,6 +26,9 @@ function CreatePost(props) {
             .then((res) => res.json())
             .then((res) => {
                 setError(res.message);
+                document.forms["form_createpost"].reset();
+                setimagePost(null);
+                setMessage("");
                 setTimeout(() => {
                     setError("");
                 }, "1000");
@@ -32,11 +40,12 @@ function CreatePost(props) {
 
     return (
         <main>
-            <form action="post" className="form_createpost">
+            <form action="post" className="form_createpost" name="form_createpost">
                 <label htmlFor="message" className="label_message">
                     Message :
                     <input
                         type="text"
+                        maxLength="200"
                         onChange={(e) => setMessage(e.target.value)}
                         name="message"
                         id="message"

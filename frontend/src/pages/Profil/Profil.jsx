@@ -92,6 +92,7 @@ function Profil() {
                     Pseudo :
                     <input
                         type="text"
+                        maxLength={12}
                         onChange={(e) => setPseudo(e.target.value)}
                         name="pseudo"
                         id="pseudo"

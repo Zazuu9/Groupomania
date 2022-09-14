@@ -25,6 +25,7 @@
     align-items: center;
     padding-top: 1%;
     padding-left: 3%;
+    color: #4e5166;
 }
 
 .user_picture {
@@ -63,6 +64,7 @@ nav ul li:hover .sub_menu {
     border-radius: 15px;
     text-align: center;
     background-color: #fff;
+    color: #4e5166;
 }
 
 nav ul li:hover .sub_menu {
@@ -81,11 +83,23 @@ nav ul li:hover .sub_menu {
 
 .delete:hover {
     background-color: #fd2d01;
+    color: black;
+}
+
+.message_image {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .message {
-    margin: 5%;
     font-size: 22px;
+    color: #4e5166;
+    width: 90%;
+    overflow-wrap: break-word;
+    text-align: justify;
+    margin: 20px auto;
 }
 
 .PostImage {
@@ -98,12 +112,17 @@ nav ul li:hover .sub_menu {
 .settings {
     cursor: pointer;
     font-size: 25px;
+    color: #4e5166;
 }
 
 .like {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#like {
+    padding-right: 5px;
 }
 
 @media screen and (max-width: 1250px) {

@@ -5,6 +5,7 @@ import { faHeart, faGear } from "@fortawesome/free-solid-svg-icons";
 
 function Post(props) {
     const id = props.id;
+
     const DeletePost = () => {
         fetch(`http://localhost:8000/api/post/${props.id}`, {
             method: "DELETE",
@@ -56,7 +57,7 @@ function Post(props) {
                                             className="modify"
                                             onClick={(e) => {
                                                 props.OpenPopup();
-                                                props.getId(id);
+                                                props.getId(id, props.message);
                                             }}
                                         >
                                             Modifier
@@ -72,8 +73,10 @@ function Post(props) {
                         </ul>
                     </nav>
                 </div>
-                <p className="message">{props.message}</p>
-                <img src={props.imagePost} alt="" className="PostImage" />
+                <div className="message_image">
+                    <p className="message">{props.message}</p>
+                    <img src={props.imagePost} alt="" className="PostImage" />
+                </div>
                 <section className="like">
                     <FontAwesomeIcon
                         icon={faHeart}

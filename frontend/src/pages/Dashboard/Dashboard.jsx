@@ -11,13 +11,15 @@ const Dashboard = () => {
     const [refresh, setRefresh] = useState(false);
     const [openPopup, setOpenPopup] = useState(false);
     const [postId, setPostId] = useState("");
+    const [message, setMessage] = useState("");
 
     const sortData = (a, b) => {
         return new Date(b.creationDate) - new Date(a.creationDate);
     };
 
-    const getId = (id) => {
+    const getId = (id, message) => {
         setPostId(id);
+        setMessage(message);
     };
 
     const DisplayPopup = () => {
@@ -40,12 +42,12 @@ const Dashboard = () => {
             })
             .catch((error) => console.log(error));
     }, [refresh]);
-
     return (
         <div className={openPopup ? "scrollBloc" : ""}>
             {openPopup ? (
                 <ModifyPopup
                     id={postId}
+                    Message={message}
                     open={openPopup}
                     RefreshPost={RefreshPost}
                     onClose={() => setOpenPopup(false)}
