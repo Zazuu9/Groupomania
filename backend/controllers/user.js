@@ -53,7 +53,7 @@ exports.login = (req, res, next) => {
                             const token = jwt.sign({ userId: user._id, role: user.role }, process.env.TOKEN_KEY, {
                                 expiresIn: "24h",
                             });
-                            res.status(200).cookie("token", token).json({
+                            res.status(200).cookie("token", token, { expiresIn: 604800, httpOnly: true }).json({
                                 userId: user._id,
                                 token: token,
                             });

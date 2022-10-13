@@ -20,7 +20,7 @@ const Header = () => {
     };
 
     const handleClickLogout = () => {
-        Cookies.remove("Token");
+        Cookies.remove("token");
         navigate("/login");
     };
 
