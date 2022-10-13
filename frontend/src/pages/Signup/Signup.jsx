@@ -22,7 +22,7 @@ function Signup() {
         formData.append("password", password);
         formData.append("birthday", birthday);
         formData.append("image", imageProfil);
-        fetch("http://localhost:8000/api/auth/signup", {
+        fetch(process.env.REACT_APP_API_URL + "/api/auth/signup", {
             method: "POST",
             body: formData,
         })

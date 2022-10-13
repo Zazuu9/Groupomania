@@ -107,7 +107,6 @@ exports.likePost = async (req, res, next) => {
         Posts.updateOne(
             { _id: req.params.id },
             {
-                //$push: { usersLiked: req.auth.userId },
                 $addToSet: { usersLiked: req.auth.userId },
                 $inc: { likes: req.body.like },
             }

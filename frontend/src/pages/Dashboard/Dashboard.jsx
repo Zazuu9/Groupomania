@@ -32,7 +32,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         setRefresh(false);
-        fetch("http://localhost:8000/api/post/", {
+        fetch(process.env.REACT_APP_API_URL + "/api/post/", {
             credentials: "include",
         })
             .then((res) => res.json())

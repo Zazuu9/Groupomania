@@ -19,7 +19,7 @@ const ModifyPopup = ({ open, onClose, id, RefreshPost, Message }) => {
             formData.append("image", imagePost);
         }
 
-        fetch(`http://localhost:8000/api/post/${id}`, {
+        fetch(process.env.REACT_APP_API_URL + `/api/post/${id}`, {
             method: "PUT",
             credentials: "include",
             body: formData,

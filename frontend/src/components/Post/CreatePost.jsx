@@ -18,7 +18,7 @@ function CreatePost(props) {
             formData.append("image", imagePost);
         }
 
-        fetch("http://localhost:8000/api/post/createpost", {
+        fetch(process.env.REACT_APP_API_URL + "/api/post/createpost", {
             method: "POST",
             credentials: "include",
             body: formData,

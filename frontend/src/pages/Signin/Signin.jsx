@@ -16,14 +16,14 @@ function Signin() {
         if (Cookies.get("Token") !== undefined) {
             navigate("/dashboard");
         }
-    });
+    }, []);
     const handleFormSubmit = (event) => {
         event.preventDefault();
         const dataToSubmit = {
             email,
             password,
         };
-        fetch("http://localhost:8000/api/auth/login", {
+        fetch(process.env.REACT_APP_API_URL + "/api/auth/login", {
             method: "POST",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify(dataToSubmit),

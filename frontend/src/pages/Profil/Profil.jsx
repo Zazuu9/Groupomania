@@ -17,7 +17,7 @@ function Profil() {
 
     useEffect(() => {
         setRefresh(false);
-        fetch("http://localhost:8000/api/auth/getoneuser", {
+        fetch(process.env.REACT_APP_API_URL + "/api/auth/getoneuser", {
             credentials: "include",
         })
             .then((res) => res.json())
@@ -33,7 +33,7 @@ function Profil() {
             email: email,
         };
 
-        fetch("http://localhost:8000/api/auth/modifyuser", {
+        fetch(process.env.REACT_APP_API_URL + "/api/auth/modifyuser", {
             headers: { Accept: "application/json", "Content-type": "application/json" },
             method: "PUT",
             body: JSON.stringify(DataSubmit),
@@ -57,7 +57,7 @@ function Profil() {
             password: password,
         };
 
-        fetch("http://localhost:8000/api/auth/changepwd", {
+        fetch(process.env.REACT_APP_API_URL + "/api/auth/changepwd", {
             headers: { "Content-type": "application/json" },
             method: "PUT",
             body: JSON.stringify(DataPasswordSubmit),
