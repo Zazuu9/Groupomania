@@ -25,7 +25,7 @@ const Header = () => {
     };
 
     useEffect(() => {
-        if (Cookies.get("Token") === undefined) {
+        if (Cookies.get("token") === undefined) {
             navigate("/login");
         }
     }, []);

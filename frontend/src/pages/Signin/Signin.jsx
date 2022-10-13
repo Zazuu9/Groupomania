@@ -13,7 +13,7 @@ function Signin() {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        if (Cookies.get("Token") !== undefined) {
+        if (Cookies.get("token") !== undefined) {
             navigate("/dashboard");
         }
     }, []);
@@ -26,6 +26,7 @@ function Signin() {
         fetch(process.env.REACT_APP_API_URL + "/api/auth/login", {
             method: "POST",
             headers: { "Content-type": "application/json" },
+            credentials: "include",
             body: JSON.stringify(dataToSubmit),
         })
             .then((res) => res.json())
@@ -34,7 +35,6 @@ function Signin() {
                 setError(res.message);
 
                 if (res.token !== undefined) {
-                    Cookies.set("Token", res.token);
                     if (res.token) {
                         navigate("/dashboard");
                     }
