@@ -7,7 +7,7 @@ function Post(props) {
     const id = props.id;
 
     const DeletePost = () => {
-        fetch(`http://localhost:8000/api/post/${props.id}`, {
+        fetch(process.env.REACT_APP_API_URL + `/api/post/${props.id}`, {
             method: "DELETE",
             credentials: "include",
         })
@@ -25,7 +25,7 @@ function Post(props) {
         } else {
             like = true;
         }
-        fetch(`http://localhost:8000/api/post/like/${props.id}`, {
+        fetch(process.env.REACT_APP_API_URL + `/api/post/like/${props.id}`, {
             method: "POST",
             headers: { Accept: "*/*", "Content-Type": "application/json" },
             body: JSON.stringify({ like: like }),
