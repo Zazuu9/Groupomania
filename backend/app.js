@@ -8,7 +8,7 @@ const dotenv = require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
-const allowedOrigins = ["http://localhost:3000", "http://api.groupomania.kgouaille.fr"];
+const allowedOrigins = ["http://localhost:3000", "api.groupomania.kgouaille.fr:80"];
 
 mongoose
     .connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
