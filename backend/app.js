@@ -8,7 +8,11 @@ const dotenv = require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
-const allowedOrigins = ["http://localhost:3000", "api.groupomania.kgouaille.fr:80"];
+const allowedOrigins = [
+    "http://localhost:3000",
+    "http://api.groupomania.kgouaille.fr",
+    "http://groupomania.kgouaille.fr",
+];
 
 mongoose
     .connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -18,7 +22,7 @@ mongoose
 app.use(
     cors({
         credentials: true,
-        origin: allowedOrigins,
+        origin: "*",
     })
 );
 app.use(express.json());
