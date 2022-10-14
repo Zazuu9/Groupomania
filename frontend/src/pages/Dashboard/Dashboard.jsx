@@ -32,8 +32,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         setRefresh(false);
-        fetch("http://api.groupomania.kgouaille.fr/api/post/", {
-            method: "GET",
+        fetch(process.env.REACT_APP_API_URL + "/api/post/", {
             credentials: "include",
         })
             .then((res) => res.json())
