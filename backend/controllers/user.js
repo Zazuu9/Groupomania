@@ -50,9 +50,13 @@ exports.login = (req, res, next) => {
                         if (!valid) {
                             res.status(401).json({ message: "Identifiant/mot de passe incorrect" });
                         } else {
-                            const token = jwt.sign({ userId: user._id, role: user.role }, process.env.TOKEN_KEY, {
-                                expiresIn: "24h",
-                            });
+                            const token = jwt.sign(
+                                { userId: user._id, role: user.role, token: process.env.TOKEN_KEY },
+                                process.env.TOKEN_KEY,
+                                {
+                                    expiresIn: "24h",
+                                }
+                            );
                             res.status(200).cookie("token", token, { expiresIn: 604800 }).json({
                                 userId: user._id,
                                 token: token,
