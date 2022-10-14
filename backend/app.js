@@ -22,7 +22,7 @@ mongoose
 app.use(
     cors({
         credentials: true,
-        origin: "*",
+        origin: allowedOrigins,
     })
 );
 app.use(express.json());
